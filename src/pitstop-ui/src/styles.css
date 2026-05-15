@@ -7,39 +7,60 @@
 /* PrimeIcons */
 @import "primeicons/primeicons.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@config "../tailwind.config.js";
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
 
-:root {
-  --brand: #e10600;
-  --brand-fg: #ffffff;
-  --brand-hover: #b80500;
-  --brand-tint: rgba(225, 6, 0, 0.06);
+@source "./**/*.{ts,tsx,js,jsx,html}";
+@source "../index.html";
+@source "../node_modules/primereact/**/*.{js,ts,jsx,tsx}";
 
-  --surface: #ffffff;
-  --surface-muted: #f5f6f8;
-  --surface-sunken: #eef0f3;
-  --surface-inverse: #0f1115;
+@theme {
+  /* Brand */
+  --color-brand: #e10600;
+  --color-brand-fg: #ffffff;
+  --color-brand-hover: #b80500;
+  --color-brand-tint: rgba(225, 6, 0, 0.06);
 
-  --content: #14171c;
-  --content-muted: #5b6470;
-  --content-inverse: #f5f6f8;
+  /* Surfaces */
+  --color-surface: #ffffff;
+  --color-surface-muted: #f5f6f8;
+  --color-surface-sunken: #eef0f3;
+  --color-surface-inverse: #0f1115;
 
-  --border: #e3e6eb;
-  --border-strong: #c9ced6;
+  /* Content */
+  --color-content: #14171c;
+  --color-content-muted: #5b6470;
+  --color-content-inverse: #f5f6f8;
 
+  /* Borders */
+  --color-border: #e3e6eb;
+  --color-border-strong: #c9ced6;
+
+  /* Legacy tokens — kept until existing usages migrate. */
+  --color-primary: #1d4ed8;
+  --color-accent: #f97316;
+  --color-secondary: #0f172a;
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+  --color-light: #f1f5f9;
+  --color-dark: #0f172a;
+
+  /* Type families */
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-display: "Oswald", "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Custom text sizes */
+  --text-meta: 0.75rem;
+  --text-meta--line-height: 1rem;
 }
 
 html,
 body {
-  background-color: var(--surface-muted);
-  color: var(--content);
+  background-color: var(--color-surface-muted);
+  color: var(--color-content);
   font-family: var(--font-sans);
   font-feature-settings: "cv11", "ss01";
 }
@@ -61,7 +82,7 @@ html body {
 
 /* --- PrimeReact surface overrides (lighter chrome) --- */
 .p-card {
-  background-color: var(--surface);
+  background-color: var(--color-surface);
   border: none;
   border-radius: 0.875rem;
   box-shadow: 0 1px 2px rgba(15, 17, 21, 0.04);
