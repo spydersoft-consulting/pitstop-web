@@ -174,7 +174,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ brand }) => {
 
   const mobileTopBar = (
     <div className="lg:hidden sticky top-0 z-30 bg-surface-inverse text-content-inverse">
-      <div className="flex items-center justify-between h-16 px-2">
+      <div className="flex items-center justify-between h-24 px-3">
         <button
           type="button"
           onClick={() => setDrawerOpen(true)}
