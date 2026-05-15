@@ -186,12 +186,12 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ brand }) => {
         <button
           type="button"
           onClick={() => navigate("/")}
-          className="flex items-center gap-2 bg-transparent border-0 cursor-pointer text-content-inverse"
+          className="flex items-center gap-3 bg-transparent border-0 cursor-pointer text-content-inverse"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-brand text-brand-fg">
-            <FontAwesomeIcon icon={faGasPump} />
+          <span className="flex h-11 w-11 items-center justify-center rounded-md bg-brand text-brand-fg">
+            <FontAwesomeIcon icon={faGasPump} className="text-xl" />
           </span>
-          <span className="font-display text-xl uppercase tracking-wider">
+          <span className="font-display text-3xl uppercase tracking-wider leading-none">
             {brandName}
           </span>
         </button>
