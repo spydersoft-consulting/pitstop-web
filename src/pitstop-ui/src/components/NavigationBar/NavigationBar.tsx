@@ -174,28 +174,28 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ brand }) => {
 
   const mobileTopBar = (
     <div className="lg:hidden sticky top-0 z-30 bg-surface-inverse text-content-inverse">
-      <div className="flex items-center justify-between h-14 px-3 border-b border-white/5">
+      <div className="flex items-center justify-between h-16 px-2">
         <button
           type="button"
           onClick={() => setDrawerOpen(true)}
-          className="h-11 w-11 flex items-center justify-center rounded-md hover:bg-white/5 bg-transparent border-0 cursor-pointer text-content-inverse"
+          className="h-12 w-12 flex items-center justify-center rounded-md hover:bg-white/10 active:bg-white/15 bg-transparent border-0 cursor-pointer text-content-inverse"
           aria-label="Open menu"
         >
-          <FontAwesomeIcon icon={faBars} />
+          <FontAwesomeIcon icon={faBars} className="text-xl" />
         </button>
         <button
           type="button"
           onClick={() => navigate("/")}
           className="flex items-center gap-2 bg-transparent border-0 cursor-pointer text-content-inverse"
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-brand text-brand-fg">
+          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-brand text-brand-fg">
             <FontAwesomeIcon icon={faGasPump} />
           </span>
-          <span className="font-display text-lg uppercase tracking-wider">
+          <span className="font-display text-xl uppercase tracking-wider">
             {brandName}
           </span>
         </button>
-        <div className="h-11 w-11" aria-hidden="true" />
+        <div className="h-12 w-12" aria-hidden="true" />
       </div>
     </div>
   );
