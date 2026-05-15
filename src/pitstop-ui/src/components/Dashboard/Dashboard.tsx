@@ -31,7 +31,6 @@ export const Dashboard: React.FC = () => {
           <Button
             label="Log Fill-Up"
             icon={<FontAwesomeIcon icon={faPlus} className="mr-2" />}
-            className="p-button-sm"
             onClick={() => navigate("/fill-ups/new")}
           />
         }

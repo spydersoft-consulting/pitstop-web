@@ -35,7 +35,6 @@ export const Vehicles: React.FC = () => {
           <Button
             label="Add Vehicle"
             icon={<FontAwesomeIcon icon={faPlus} className="mr-2" />}
-            className="p-button-sm"
             onClick={() => navigate("/vehicles/new")}
           />
         }
