@@ -12,7 +12,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   actions,
 }) => {
   return (
-    <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between border-b border-border pb-4">
+    <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between pb-2">
       <div className="min-w-0">
         <h1 className="font-display text-page-title uppercase tracking-wide text-content">
           {title}

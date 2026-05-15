@@ -13,7 +13,6 @@ import {
   faAnglesLeft,
   faAnglesRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "primereact/button";
 import { Sidebar } from "primereact/sidebar";
 import { useAuth } from "../../context";
 
@@ -203,6 +202,9 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ brand }) => {
 
   /* ------------------------- Mobile drawer ------------------------- */
 
+  const drawerRowClass =
+    "w-full flex items-center gap-3 px-3 min-h-[48px] rounded-lg text-base font-medium no-underline bg-transparent border-0 cursor-pointer text-content hover:bg-surface-muted";
+
   const mobileDrawer = (
     <Sidebar
       visible={drawerOpen}
@@ -228,14 +230,14 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ brand }) => {
             onClick={() => setDrawerOpen(false)}
             className={({ isActive }) =>
               [
-                "flex items-center gap-3 px-3 min-h-[44px] rounded-lg text-sm font-medium no-underline",
+                "flex items-center gap-3 px-3 min-h-[48px] rounded-lg text-base font-medium no-underline",
                 isActive
                   ? "bg-brand text-brand-fg"
                   : "text-content hover:bg-surface-muted",
               ].join(" ")
             }
           >
-            <FontAwesomeIcon icon={item.icon} />
+            <FontAwesomeIcon icon={item.icon} className="w-5" />
             <span>{item.label}</span>
           </NavLink>
         ))}
@@ -243,30 +245,36 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ brand }) => {
       <hr className="my-4 border-border" />
       {isAuthenticated ? (
         <>
-          <div className="px-3 py-2 text-sm text-content-muted flex items-center gap-2">
-            <FontAwesomeIcon icon={faUser} />
-            {userName}
-          </div>
-          <Button
-            label="Sign out"
-            icon={<FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />}
-            className="p-button-text w-full justify-start"
+          {userName && (
+            <div className="flex items-center gap-3 px-3 min-h-[48px] text-sm text-content-muted">
+              <FontAwesomeIcon icon={faUser} className="w-5" />
+              <span className="truncate">{userName}</span>
+            </div>
+          )}
+          <button
+            type="button"
+            className={drawerRowClass}
             onClick={() => {
               logout();
               setDrawerOpen(false);
             }}
-          />
+          >
+            <FontAwesomeIcon icon={faSignOutAlt} className="w-5" />
+            <span>Sign out</span>
+          </button>
         </>
       ) : (
-        <Button
-          label="Sign in"
-          icon={<FontAwesomeIcon icon={faSignInAlt} className="mr-2" />}
-          className="p-button-text w-full justify-start"
+        <button
+          type="button"
+          className={drawerRowClass}
           onClick={() => {
             login();
             setDrawerOpen(false);
           }}
-        />
+        >
+          <FontAwesomeIcon icon={faSignInAlt} className="w-5" />
+          <span>Sign in</span>
+        </button>
       )}
     </Sidebar>
   );
