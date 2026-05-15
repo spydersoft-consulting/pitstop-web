@@ -11,6 +11,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@config "../tailwind.config.js";
+
 :root {
   --brand: #e10600;
   --brand-fg: #ffffff;
