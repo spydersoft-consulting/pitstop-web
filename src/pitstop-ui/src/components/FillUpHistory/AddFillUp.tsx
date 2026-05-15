@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { createFillUp } from "../../store/slices/fillUpSlice";
 import { FillUpForm } from "./FillUpForm";
 import type { CreateFillUpRequest } from "../../api/generated/types.gen";
+import { PageHeader } from "../layout/PageHeader";
 
 export const AddFillUp: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +30,7 @@ export const AddFillUp: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-secondary">Log Fill-Up</h1>
+      <PageHeader title="Log Fill-Up" />
       <Card>
         {error && (
           <p className="text-red-500 text-sm mb-4">{error}</p>

@@ -5,6 +5,7 @@ import { useAppDispatch } from "../../store/hooks";
 import { createVehicle } from "../../store/slices/vehicleSlice";
 import { VehicleForm } from "./VehicleForm";
 import type { CreateVehicleRequest } from "../../api/generated/types.gen";
+import { PageHeader } from "../layout/PageHeader";
 
 export const AddVehicle: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +28,7 @@ export const AddVehicle: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-secondary">Add Vehicle</h1>
+      <PageHeader title="Add Vehicle" subtitle="Register a new vehicle to track" />
       <Card>
         {error && (
           <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">

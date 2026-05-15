@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { updateFillUp } from "../../store/slices/fillUpSlice";
 import { FillUpForm, type FillUpFormValues } from "./FillUpForm";
 import type { FillUpRequest } from "../../api/generated/types.gen";
+import { PageHeader } from "../layout/PageHeader";
 
 export const EditFillUp: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,7 +21,7 @@ export const EditFillUp: React.FC = () => {
   if (!fillUp || selectedVehicleId == null) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-secondary">Edit Fill-Up</h1>
+        <PageHeader title="Edit Fill-Up" />
         <p className="text-gray-400">Fill-up not found.</p>
       </div>
     );

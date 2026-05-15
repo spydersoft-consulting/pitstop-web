@@ -10,6 +10,7 @@ import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { deleteFillUp } from "../../store/slices/fillUpSlice";
 import type { FillUp } from "../../store/slices/fillUpSlice";
+import { PageHeader } from "../layout/PageHeader";
 
 export const FillUpHistory: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -66,15 +67,17 @@ export const FillUpHistory: React.FC = () => {
   return (
     <div className="space-y-6" ref={toastRef}>
       <ConfirmPopup />
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-secondary">Fill-Up History</h1>
-        <Button
-          label="Add Fill-Up"
-          icon={<FontAwesomeIcon icon={faPlus} className="mr-2" />}
-          className="p-button-sm"
-          onClick={() => navigate("/fill-ups/new")}
-        />
-      </div>
+      <PageHeader
+        title="Fill-Up History"
+        actions={
+          <Button
+            label="Add Fill-Up"
+            icon={<FontAwesomeIcon icon={faPlus} className="mr-2" />}
+            className="p-button-sm"
+            onClick={() => navigate("/fill-ups/new")}
+          />
+        }
+      />
 
       <Card>
         {recentFillUps.length === 0 ? (

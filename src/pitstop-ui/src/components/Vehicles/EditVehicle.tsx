@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { updateVehicle } from "../../store/slices/vehicleSlice";
 import { VehicleForm, type VehicleFormValues } from "./VehicleForm";
 import type { UpdateVehicleRequest } from "../../api/generated/types.gen";
+import { PageHeader } from "../layout/PageHeader";
 
 export const EditVehicle: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,7 +21,7 @@ export const EditVehicle: React.FC = () => {
   if (!vehicle) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-secondary">Edit Vehicle</h1>
+        <PageHeader title="Edit Vehicle" />
         <Card>
           <p className="text-gray-500">Vehicle not found.</p>
         </Card>

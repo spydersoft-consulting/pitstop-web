@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGasPump,
@@ -10,8 +11,10 @@ import { Card } from "primereact/card";
 import { useAppSelector } from "../../store/hooks";
 import type { Vehicle } from "../../store/slices/vehicleSlice";
 import type { FillUp } from "../../store/slices/fillUpSlice";
+import { PageHeader } from "../layout/PageHeader";
 
 export const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
   const { vehicles, selectedVehicleId } = useAppSelector((s) => s.vehicles);
   const { recentFillUps } = useAppSelector((s) => s.fillUps);
 
@@ -22,17 +25,17 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-secondary">Dashboard</h1>
-        <Button
-          label="Log Fill-Up"
-          icon={<FontAwesomeIcon icon={faPlus} className="mr-2" />}
-          className="p-button-sm"
-          onClick={() => {
-            window.location.href = "/fill-ups";
-          }}
-        />
-      </div>
+      <PageHeader
+        title="Dashboard"
+        actions={
+          <Button
+            label="Log Fill-Up"
+            icon={<FontAwesomeIcon icon={faPlus} className="mr-2" />}
+            className="p-button-sm"
+            onClick={() => navigate("/fill-ups/new")}
+          />
+        }
+      />
 
       {/* Stats row */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

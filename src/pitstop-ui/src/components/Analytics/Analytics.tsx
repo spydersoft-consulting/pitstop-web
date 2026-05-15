@@ -4,6 +4,7 @@ import { faChartLine } from "@fortawesome/free-solid-svg-icons";
 import { Card } from "primereact/card";
 import { Chart } from "primereact/chart";
 import { useAppSelector } from "../../store/hooks";
+import { PageHeader } from "../layout/PageHeader";
 
 export const Analytics: React.FC = () => {
   const { recentFillUps } = useAppSelector((s) => s.fillUps);
@@ -61,7 +62,7 @@ export const Analytics: React.FC = () => {
   if (recentFillUps.length < 2) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-secondary">Analytics</h1>
+        <PageHeader title="Analytics" />
         <Card>
           <div className="text-center py-12 text-gray-400">
             <FontAwesomeIcon icon={faChartLine} className="text-4xl mb-3" />

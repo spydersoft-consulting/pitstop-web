@@ -7,6 +7,7 @@ import { Card } from "primereact/card";
 import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { selectVehicle, deleteVehicle, type Vehicle } from "../../store/slices/vehicleSlice";
+import { PageHeader } from "../layout/PageHeader";
 
 export const Vehicles: React.FC = () => {
   const { vehicles, selectedVehicleId } = useAppSelector((s) => s.vehicles);
@@ -28,15 +29,17 @@ export const Vehicles: React.FC = () => {
   return (
     <div className="space-y-6">
       <ConfirmPopup ref={toastRef} />
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-secondary">Vehicles</h1>
-        <Button
-          label="Add Vehicle"
-          icon={<FontAwesomeIcon icon={faPlus} className="mr-2" />}
-          className="p-button-sm"
-          onClick={() => navigate("/vehicles/new")}
-        />
-      </div>
+      <PageHeader
+        title="Vehicles"
+        actions={
+          <Button
+            label="Add Vehicle"
+            icon={<FontAwesomeIcon icon={faPlus} className="mr-2" />}
+            className="p-button-sm"
+            onClick={() => navigate("/vehicles/new")}
+          />
+        }
+      />
 
       {vehicles.length === 0 ? (
         <Card>
