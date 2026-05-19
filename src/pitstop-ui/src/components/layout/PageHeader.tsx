@@ -1,7 +1,7 @@
 import React from "react";
 
 interface PageHeaderProps {
-  title: string;
+  title?: string;
   subtitle?: React.ReactNode;
   actions?: React.ReactNode;
 }
@@ -12,17 +12,21 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   actions,
 }) => {
   return (
-    <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between pb-2">
-      <div className="min-w-0">
-        <h1 className="font-display text-lg sm:text-xl lg:text-2xl uppercase tracking-wide text-content">
-          {title}
-        </h1>
-        {subtitle && (
-          <p className="text-sm text-content-muted mt-1">{subtitle}</p>
-        )}
-      </div>
+    <header className="flex flex-row items-center justify-between gap-3 pb-2">
+      {title && (
+        <div className="min-w-0">
+          <h1 className="font-display text-lg sm:text-xl lg:text-2xl uppercase tracking-wide text-content">
+            {title}
+          </h1>
+          {subtitle && (
+            <p className="text-sm text-content-muted mt-1">{subtitle}</p>
+          )}
+        </div>
+      )}
       {actions && (
-        <div className="flex items-center gap-2 shrink-0">{actions}</div>
+        <div className="flex items-center gap-2 shrink-0 ml-auto">
+          {actions}
+        </div>
       )}
     </header>
   );

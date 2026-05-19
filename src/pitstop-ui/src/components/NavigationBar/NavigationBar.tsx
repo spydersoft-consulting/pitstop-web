@@ -174,28 +174,28 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ brand }) => {
 
   const mobileTopBar = (
     <div className="lg:hidden sticky top-0 z-30 bg-surface-inverse text-content-inverse">
-      <div className="flex items-center justify-between h-28 px-3">
+      <div className="flex items-center justify-between h-14 px-3">
         <button
           type="button"
           onClick={() => setDrawerOpen(true)}
-          className="h-12 w-12 flex items-center justify-center rounded-md hover:bg-white/10 active:bg-white/15 bg-transparent border-0 cursor-pointer text-content-inverse"
+          className="h-11 w-11 flex items-center justify-center rounded-md hover:bg-white/10 active:bg-white/15 bg-transparent border-0 cursor-pointer text-content-inverse"
           aria-label="Open menu"
         >
-          <FontAwesomeIcon icon={faBars} className="text-xl" />
+          <FontAwesomeIcon icon={faBars} className="text-lg" />
         </button>
         <button
           type="button"
           onClick={() => navigate("/")}
-          className="flex items-center gap-3 bg-transparent border-0 cursor-pointer text-content-inverse"
+          className="flex items-center gap-2 bg-transparent border-0 cursor-pointer text-content-inverse"
         >
-          <span className="flex h-11 w-11 items-center justify-center rounded-md bg-brand text-brand-fg">
-            <FontAwesomeIcon icon={faGasPump} className="text-xl" />
+          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-brand text-brand-fg">
+            <FontAwesomeIcon icon={faGasPump} className="text-base" />
           </span>
-          <span className="font-display text-3xl uppercase tracking-wider leading-none">
+          <span className="font-display text-xl uppercase tracking-wider leading-none">
             {brandName}
           </span>
         </button>
-        <div className="h-12 w-12" aria-hidden="true" />
+        <div className="h-11 w-11" aria-hidden="true" />
       </div>
     </div>
   );
