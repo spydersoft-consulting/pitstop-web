@@ -18,40 +18,13 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectVehicle, type Vehicle } from "../../store/slices/vehicleSlice";
 import type { FillUp } from "../../store/slices/fillUpSlice";
 import { PageHeader } from "../layout/PageHeader";
+import { KpiTile } from "../layout/KpiTile";
 
 const num = (v: number | string | null | undefined): number | null => {
   if (v === null || v === undefined) return null;
   const n = typeof v === "string" ? Number.parseFloat(v) : v;
   return Number.isFinite(n) ? n : null;
 };
-
-interface KpiTileProps {
-  icon: typeof faGaugeHigh;
-  label: string;
-  value: string;
-  unit?: string;
-}
-
-const KpiTile: React.FC<KpiTileProps> = ({ icon, label, value, unit }) => (
-  <div className="flex items-center gap-2 sm:gap-3 rounded-xl bg-surface px-3 py-3 border border-border min-w-0">
-    <span className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-brand-tint text-brand shrink-0">
-      <FontAwesomeIcon icon={icon} className="text-base sm:text-lg" />
-    </span>
-    <div className="min-w-0 flex-1">
-      <p className="text-meta uppercase tracking-wide text-content-muted truncate">
-        {label}
-      </p>
-      <p className="font-numeric text-lg sm:text-2xl leading-tight text-content truncate">
-        {value}
-        {unit && (
-          <span className="text-xs sm:text-sm text-content-muted ml-1 font-sans">
-            {unit}
-          </span>
-        )}
-      </p>
-    </div>
-  </div>
-);
 
 export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
