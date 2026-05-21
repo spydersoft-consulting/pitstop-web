@@ -7,6 +7,25 @@ export interface UserInfo {
   exp: number;
 }
 
+const DISPLAY_NAME_CLAIMS = ["name", "preferred_username", "email"] as const;
+
+const resolveDisplayName = (claims: Record<string, unknown>): string => {
+  for (const key of DISPLAY_NAME_CLAIMS) {
+    const value = claims[key];
+    if (typeof value === "string" && value.length > 0) return value;
+  }
+  return "";
+};
+
+const toEpochSeconds = (value: unknown): number => {
+  if (typeof value === "number") return value;
+  if (typeof value === "string") {
+    const parsed = Number.parseInt(value, 10);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+  return 0;
+};
+
 interface IAuthContext {
   isLoading: boolean;
   isAuthenticated: boolean;
@@ -64,11 +83,11 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     setIsLoading(true);
     try {
       const userInfo = await axios
-        .get<{ name: string; exp: string }>("/.auth/me")
+        .get<Record<string, unknown>>("/.auth/me")
         .then((r) => ({
-          name: r.data.name,
+          name: resolveDisplayName(r.data),
           authenticated: true,
-          exp: parseInt(r.data.exp),
+          exp: toEpochSeconds(r.data.exp),
         }))
         .catch((err: { response?: { status: number } }) => {
           if (err.response?.status === 401) {
