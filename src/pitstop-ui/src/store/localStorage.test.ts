@@ -3,7 +3,7 @@ import { loadState, saveState } from "./localStorage";
 import type { RootState } from "./store";
 
 const KEY = "pitstop_state";
-const VERSION = 3;
+const VERSION = 4;
 
 const sampleState = (): RootState => ({
   vehicles: { vehicles: [], selectedVehicleId: null, loading: false },

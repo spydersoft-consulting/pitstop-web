@@ -9,6 +9,7 @@ import { Analytics } from "./Analytics/Analytics";
 import { Vehicles } from "./Vehicles/Vehicles";
 import { AddVehicle } from "./Vehicles/AddVehicle";
 import { EditVehicle } from "./Vehicles/EditVehicle";
+import { Landing } from "./Landing/Landing";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchVehicles } from "../store/slices/vehicleSlice";
 import { fetchFillUps } from "../store/slices/fillUpSlice";
@@ -26,10 +27,14 @@ export const AppRouter: React.FC = () => {
   }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
-    if (selectedVehicleId != null) {
+    if (isAuthenticated && selectedVehicleId != null) {
       void dispatch(fetchFillUps(selectedVehicleId));
     }
-  }, [dispatch, selectedVehicleId]);
+  }, [dispatch, isAuthenticated, selectedVehicleId]);
+
+  if (!isAuthenticated) {
+    return <Landing />;
+  }
 
   return (
     <Router basename="/">

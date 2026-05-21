@@ -33,7 +33,7 @@ export const Dashboard: React.FC = () => {
   const { recentFillUps } = useAppSelector((s) => s.fillUps);
 
   const selectedVehicle = vehicles.find(
-    (v: Vehicle) => v.id === selectedVehicleId,
+    (v: Vehicle | null | undefined) => v?.id === selectedVehicleId,
   );
 
   const sortedFillUps = useMemo(
