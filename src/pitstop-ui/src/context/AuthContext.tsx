@@ -131,7 +131,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
 
   const logout = () => {
     clearAuthState();
-    window.location.href = "/.auth/logout";
+    window.location.href = "/.auth/end-session";
   };
 
   const refreshAuth = () => {
