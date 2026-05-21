@@ -105,7 +105,12 @@ describe("vehicleSlice thunks", () => {
     const store = makeStore();
     store.dispatch(setVehicles([v(1, { name: "old" }), v(2)]));
     vi.mocked(vehiclesApi.update).mockResolvedValue(v(1, { name: "new" }));
-    await store.dispatch(updateVehicle({ id: 1, body: { name: "new" } }));
+    await store.dispatch(
+      updateVehicle({
+        id: 1,
+        body: { name: "new", make: "Honda", model: "Accord" },
+      }),
+    );
     expect(store.getState().vehicles.vehicles[0].name).toBe("new");
   });
 

@@ -72,7 +72,6 @@ describe("fillUpSlice thunks", () => {
   });
 
   it("fetchFillUps.pending clears existing entries and sets loading", () => {
-    const store = makeStore();
     const action = { type: fetchFillUps.pending.type };
     const next = fillUpSliceReducer(
       { recentFillUps: [f(99)], loading: false },
