@@ -107,7 +107,7 @@ export const FillUpForm: React.FC<Props> = ({
   );
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 max-w-xl">
+    <form onSubmit={handleSubmit} className="space-y-3">
       {field("Date *", errors.filledAt,
         <Calendar
           value={values.filledAt}

@@ -97,7 +97,7 @@ export const VehicleForm: React.FC<Props> = ({
   );
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 max-w-xl">
+    <form onSubmit={handleSubmit} className="space-y-3">
       {field("Name *", errors.name,
         <InputText
           value={values.name}

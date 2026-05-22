@@ -20,7 +20,7 @@ export const EditFillUp: React.FC = () => {
 
   if (!fillUp || selectedVehicleId == null) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-4 max-w-2xl mx-auto">
         <PageHeader title="Edit Fill-Up" />
         <p className="text-gray-400">Fill-up not found.</p>
       </div>
@@ -55,7 +55,7 @@ export const EditFillUp: React.FC = () => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-2xl mx-auto">
       <PageHeader title="Edit Fill-Up" />
       <Card>
         {error && (

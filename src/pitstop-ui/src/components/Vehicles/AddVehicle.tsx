@@ -27,7 +27,7 @@ export const AddVehicle: React.FC = () => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-2xl mx-auto">
       <PageHeader title="Add Vehicle" subtitle="Register a new vehicle to track" />
       <Card>
         {error && (
