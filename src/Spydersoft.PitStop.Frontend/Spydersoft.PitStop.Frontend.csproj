@@ -13,8 +13,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="OidcProxy.Net.OpenIdConnect" Version="5.4.1" />
-		<PackageReference Include="Spydersoft.Platform.Hosting" Version="2.3.0" />
+		<PackageReference Include="OidcProxy.Net.OpenIdConnect" />
+		<PackageReference Include="Spydersoft.Platform.Hosting" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\pitstop-ui\pitstop-ui.esproj">

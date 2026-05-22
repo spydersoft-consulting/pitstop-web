@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import axios from "axios";
+import { registerUnauthorizedHandler } from "./authSession";
 
 export interface UserInfo {
   name: string;
@@ -8,6 +9,7 @@ export interface UserInfo {
 }
 
 const DISPLAY_NAME_CLAIMS = ["name", "preferred_username", "email"] as const;
+const REFRESH_WINDOW_MS = 5 * 60 * 1000;
 
 const resolveDisplayName = (claims: Record<string, unknown>): string => {
   for (const key of DISPLAY_NAME_CLAIMS) {
@@ -25,6 +27,9 @@ const toEpochSeconds = (value: unknown): number => {
   }
   return 0;
 };
+
+const isFresh = (exp: number): boolean =>
+  exp > 0 && Date.now() < exp * 1000 - REFRESH_WINDOW_MS;
 
 interface IAuthContext {
   isLoading: boolean;
@@ -56,107 +61,80 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const [hasInitialized, setHasInitialized] = useState(false);
-
-  const getUser = async () => {
-    if (isLoading) return;
-
-    const now = Date.now();
-
-    if (user?.exp) {
-      const expiresAt = user.exp * 1000;
-      const fiveMinutes = 5 * 60 * 1000;
-
-      if (now < expiresAt - fiveMinutes) {
-        const lastCheck = localStorage.getItem("lastAuthCheck");
-        const fifteenMinutes = 15 * 60 * 1000;
-        if (
-          lastCheck &&
-          isAuthenticated &&
-          now - parseInt(lastCheck) < fifteenMinutes
-        ) {
-          return;
-        }
-      }
-    }
-
-    setIsLoading(true);
-    try {
-      const userInfo = await axios
-        .get<Record<string, unknown>>("/.auth/me")
-        .then((r) => ({
-          name: resolveDisplayName(r.data),
-          authenticated: true,
-          exp: toEpochSeconds(r.data.exp),
-        }))
-        .catch((err: { response?: { status: number } }) => {
-          if (err.response?.status === 401) {
-            clearAuthState();
-            return { name: "", authenticated: false, exp: 0 };
-          }
-          throw err;
-        });
-
-      const authenticated = userInfo.authenticated;
-      setIsAuthenticated(authenticated);
-      localStorage.setItem("isAuthenticated", String(authenticated));
-      localStorage.setItem("lastAuthCheck", String(now));
-
-      if (authenticated) {
-        setUser(userInfo);
-        localStorage.setItem("user", JSON.stringify(userInfo));
-      } else {
-        setUser(undefined);
-        localStorage.removeItem("user");
-      }
-    } catch {
-      clearAuthState();
-    } finally {
-      setIsLoading(false);
-      setHasInitialized(true);
-    }
-  };
+  const inflight = useRef<Promise<void> | null>(null);
 
   const clearAuthState = () => {
     setIsAuthenticated(false);
     setUser(undefined);
     localStorage.removeItem("isAuthenticated");
     localStorage.removeItem("user");
-    localStorage.removeItem("lastAuthCheck");
+  };
+
+  const fetchUser = (): Promise<void> => {
+    if (inflight.current) return inflight.current;
+
+    setIsLoading(true);
+    const p = axios
+      .get<Record<string, unknown>>("/.auth/me")
+      .then((r) => {
+        const userInfo: UserInfo = {
+          name: resolveDisplayName(r.data),
+          authenticated: true,
+          exp: toEpochSeconds(r.data.exp),
+        };
+        setIsAuthenticated(true);
+        setUser(userInfo);
+        localStorage.setItem("isAuthenticated", "true");
+        localStorage.setItem("user", JSON.stringify(userInfo));
+      })
+      .catch((err: { response?: { status: number } }) => {
+        if (err.response?.status === 401) {
+          clearAuthState();
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+        inflight.current = null;
+      });
+
+    inflight.current = p;
+    return p;
   };
 
   useEffect(() => {
-    if (!hasInitialized) {
-      void getUser();
-    }
+    if (user && isFresh(user.exp)) return;
+    void fetchUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasInitialized]);
+  }, []);
 
   useEffect(() => {
-    if (!isAuthenticated || !user) return;
-    const interval = setInterval(() => {
-      const now = Date.now();
-      if (user.exp && now >= user.exp * 1000 - 5 * 60 * 1000) {
-        void getUser();
-      }
-    }, 60_000);
-    return () => clearInterval(interval);
+    if (!isAuthenticated || !user?.exp) return;
+    const msUntilRefresh = user.exp * 1000 - REFRESH_WINDOW_MS - Date.now();
+    const handle = globalThis.setTimeout(
+      () => {
+        void fetchUser();
+      },
+      Math.max(msUntilRefresh, 0),
+    );
+    return () => globalThis.clearTimeout(handle);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user?.exp]);
+
+  useEffect(() => {
+    return registerUnauthorizedHandler(clearAuthState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const login = () => {
-    window.location.href = "/.auth/login";
+    globalThis.location.href = "/.auth/login";
   };
 
   const logout = () => {
     clearAuthState();
-    window.location.href = "/.auth/end-session";
+    globalThis.location.href = "/.auth/end-session";
   };
 
-  const refreshAuth = () => {
-    setHasInitialized(false);
-    return getUser();
-  };
+  const refreshAuth = () => fetchUser();
 
   const contextValue = useMemo<IAuthContext>(
     () => ({ isAuthenticated, user, isLoading, login, logout, refreshAuth }),
