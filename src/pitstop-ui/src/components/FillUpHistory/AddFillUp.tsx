@@ -29,7 +29,7 @@ export const AddFillUp: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader title="Log Fill-Up" />
       <Card>
         {error && (

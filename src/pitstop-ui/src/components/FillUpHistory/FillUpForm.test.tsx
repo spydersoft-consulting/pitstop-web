@@ -75,7 +75,7 @@ describe("FillUpForm", () => {
     expect(body.filledAt).toBe("2026-01-15T12:30:00.000Z");
   });
 
-  it("defaults a blank fuel grade to Midgrade", async () => {
+  it("defaults a blank fuel grade to MidGrade", async () => {
     const user = userEvent.setup();
     const { onSubmit } = renderForm({
       initialValues: { ...filled, fuelGrade: "  " },
@@ -83,7 +83,7 @@ describe("FillUpForm", () => {
 
     await user.click(screen.getByRole("button", { name: /add fill-up/i }));
 
-    expect(onSubmit.mock.calls[0][0].fuelGrade).toBe("Midgrade");
+    expect(onSubmit.mock.calls[0][0].fuelGrade).toBe("MidGrade");
   });
 
   it("uses the Save Changes label when in edit mode", () => {

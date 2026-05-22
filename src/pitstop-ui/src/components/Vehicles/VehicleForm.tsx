@@ -97,7 +97,7 @@ export const VehicleForm: React.FC<Props> = ({
   );
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-lg">
+    <form onSubmit={handleSubmit} className="space-y-3 max-w-xl">
       {field("Name *", errors.name,
         <InputText
           value={values.name}
@@ -107,7 +107,7 @@ export const VehicleForm: React.FC<Props> = ({
         />
       )}
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {field("Make *", errors.make,
           <InputText
             value={values.make}
@@ -126,7 +126,7 @@ export const VehicleForm: React.FC<Props> = ({
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {field("Year",
           undefined,
           <InputNumber
@@ -147,23 +147,22 @@ export const VehicleForm: React.FC<Props> = ({
             className="w-full"
           />
         )}
+        {field("Tank Capacity (gal)",
+          undefined,
+          <InputNumber
+            value={values.tankCapacityGallons}
+            onValueChange={(e) => set("tankCapacityGallons", e.value ?? null)}
+            placeholder="e.g. 14.8"
+            minFractionDigits={1}
+            maxFractionDigits={3}
+            className="w-full"
+            inputClassName="w-full"
+          />
+        )}
       </div>
 
-      {field("Tank Capacity (gal)",
-        undefined,
-        <InputNumber
-          value={values.tankCapacityGallons}
-          onValueChange={(e) => set("tankCapacityGallons", e.value ?? null)}
-          placeholder="e.g. 14.8"
-          minFractionDigits={1}
-          maxFractionDigits={3}
-          className="w-full"
-          inputClassName="w-full"
-        />
-      )}
-
       {!isEdit && (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {field("Starting Odometer (mi)",
             undefined,
             <InputNumber

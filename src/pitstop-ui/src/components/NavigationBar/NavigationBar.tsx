@@ -14,7 +14,7 @@ import {
   faAnglesRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { Sidebar } from "primereact/sidebar";
-import { useAuth } from "../../context";
+import { useAuth, usePageTitle } from "../../context";
 
 interface NavigationBarProps {
   brand?: string;
@@ -40,6 +40,8 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ brand }) => {
   const navigate = useNavigate();
   const brandName = brand ?? "PitStop";
   const userName = user?.name;
+  const pageTitle = usePageTitle();
+  const mobileTitle = pageTitle ?? brandName;
 
   const navLinkClass = (isActive: boolean, isCollapsed: boolean) =>
     [
@@ -174,11 +176,11 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ brand }) => {
 
   const mobileTopBar = (
     <div className="lg:hidden sticky top-0 z-30 bg-surface-inverse text-content-inverse">
-      <div className="flex items-center justify-between h-14 px-3">
+      <div className="flex items-center h-14 px-3 gap-2">
         <button
           type="button"
           onClick={() => setDrawerOpen(true)}
-          className="h-11 w-11 flex items-center justify-center rounded-md hover:bg-white/10 active:bg-white/15 bg-transparent border-0 cursor-pointer text-content-inverse"
+          className="h-11 w-11 flex items-center justify-center rounded-md hover:bg-white/10 active:bg-white/15 bg-transparent border-0 cursor-pointer text-content-inverse shrink-0"
           aria-label="Open menu"
         >
           <FontAwesomeIcon icon={faBars} className="text-lg" />
@@ -186,16 +188,14 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ brand }) => {
         <button
           type="button"
           onClick={() => navigate("/")}
-          className="flex items-center gap-2 bg-transparent border-0 cursor-pointer text-content-inverse"
+          className="flex h-8 w-8 items-center justify-center rounded-md bg-brand text-brand-fg border-0 cursor-pointer shrink-0 p-0"
+          aria-label="Home"
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-brand text-brand-fg">
-            <FontAwesomeIcon icon={faGasPump} className="text-base" />
-          </span>
-          <span className="font-display text-xl uppercase tracking-wider leading-none">
-            {brandName}
-          </span>
+          <FontAwesomeIcon icon={faGasPump} className="text-base" />
         </button>
-        <div className="h-11 w-11" aria-hidden="true" />
+        <h1 className="font-display text-lg uppercase tracking-wider leading-none truncate min-w-0">
+          {mobileTitle}
+        </h1>
       </div>
     </div>
   );

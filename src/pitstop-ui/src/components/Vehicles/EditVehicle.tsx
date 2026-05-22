@@ -20,7 +20,7 @@ export const EditVehicle: React.FC = () => {
 
   if (!vehicle) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-4">
         <PageHeader title="Edit Vehicle" />
         <Card>
           <p className="text-gray-500">Vehicle not found.</p>
@@ -54,8 +54,8 @@ export const EditVehicle: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-secondary">Edit Vehicle</h1>
+    <div className="space-y-4">
+      <PageHeader title="Edit Vehicle" />
       <Card>
         {error && (
           <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">

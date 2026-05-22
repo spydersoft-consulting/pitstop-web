@@ -31,7 +31,7 @@ export const EditFillUp: React.FC = () => {
     filledAt: fillUp.filledAt ? new Date(fillUp.filledAt) : null,
     odometerReading: Number(fillUp.odometerReading) || null,
     gallonsAdded: Number(fillUp.gallonsAdded) || null,
-    fuelGrade: fillUp.fuelGrade ?? "Midgrade",
+    fuelGrade: fillUp.fuelGrade ?? "MidGrade",
     pricePerGallon: Number(fillUp.pricePerGallon) || null,
     totalCost: Number(fillUp.totalCost) || null,
     isFullFillUp: fillUp.isFullFillUp ?? true,
@@ -55,8 +55,8 @@ export const EditFillUp: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-secondary">Edit Fill-Up</h1>
+    <div className="space-y-4">
+      <PageHeader title="Edit Fill-Up" />
       <Card>
         {error && (
           <p className="text-red-500 text-sm mb-4">{error}</p>

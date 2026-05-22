@@ -2,10 +2,20 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputText } from "primereact/inputtext";
 import { InputNumber } from "primereact/inputnumber";
+import { InputTextarea } from "primereact/inputtextarea";
 import { Calendar } from "primereact/calendar";
 import { Checkbox } from "primereact/checkbox";
+import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import type { CreateFillUpRequest, FillUpRequest } from "../../api/generated/types.gen";
+
+const FUEL_GRADE_OPTIONS = [
+  { label: "Regular", value: "Regular" },
+  { label: "Mid-Grade", value: "MidGrade" },
+  { label: "Premium", value: "Premium" },
+  { label: "Diesel", value: "Diesel" },
+  { label: "E85", value: "E85" },
+];
 
 export interface FillUpFormValues {
   filledAt: Date | null;
@@ -30,7 +40,7 @@ const defaults: FillUpFormValues = {
   filledAt: new Date(),
   odometerReading: null,
   gallonsAdded: null,
-  fuelGrade: "Midgrade",
+  fuelGrade: "MidGrade",
   pricePerGallon: null,
   totalCost: null,
   isFullFillUp: true,
@@ -78,7 +88,7 @@ export const FillUpForm: React.FC<Props> = ({
       filledAt: values.filledAt!.toISOString(),
       odometerReading: values.odometerReading!,
       gallonsAdded: values.gallonsAdded!,
-      fuelGrade: values.fuelGrade.trim() || "Midgrade",
+      fuelGrade: values.fuelGrade.trim() || "MidGrade",
       pricePerGallon: values.pricePerGallon!,
       totalCost: values.totalCost!,
       isFullFillUp: values.isFullFillUp,
@@ -97,19 +107,20 @@ export const FillUpForm: React.FC<Props> = ({
   );
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-lg">
-      <div className="grid grid-cols-2 gap-4">
-        {field("Date *", errors.filledAt,
-          <Calendar
-            value={values.filledAt}
-            onChange={(e) => set("filledAt", e.value ?? null)}
-            showIcon
-            showTime
-            hourFormat="12"
-            className="w-full"
-            inputClassName="w-full"
-          />
-        )}
+    <form onSubmit={handleSubmit} className="space-y-3 max-w-xl">
+      {field("Date *", errors.filledAt,
+        <Calendar
+          value={values.filledAt}
+          onChange={(e) => set("filledAt", e.value ?? null)}
+          showIcon
+          showTime
+          hourFormat="12"
+          className="w-full"
+          inputClassName="w-full"
+        />
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {field("Odometer (mi) *", errors.odometerReading,
           <InputNumber
             value={values.odometerReading}
@@ -120,9 +131,18 @@ export const FillUpForm: React.FC<Props> = ({
             inputClassName="w-full"
           />
         )}
+        {field("Fuel Grade",
+          undefined,
+          <Dropdown
+            value={values.fuelGrade}
+            options={FUEL_GRADE_OPTIONS}
+            onChange={(e) => set("fuelGrade", e.value)}
+            className="w-full"
+          />
+        )}
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {field("Gallons Added *", errors.gallonsAdded,
           <InputNumber
             value={values.gallonsAdded}
@@ -135,18 +155,6 @@ export const FillUpForm: React.FC<Props> = ({
             inputClassName="w-full"
           />
         )}
-        {field("Fuel Grade",
-          undefined,
-          <InputText
-            value={values.fuelGrade}
-            onChange={(e) => set("fuelGrade", e.target.value)}
-            placeholder="e.g. Midgrade"
-            className="w-full"
-          />
-        )}
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
         {field("Price / Gallon *", errors.pricePerGallon,
           <InputNumber
             value={values.pricePerGallon}
@@ -188,15 +196,17 @@ export const FillUpForm: React.FC<Props> = ({
 
       {field("Notes",
         undefined,
-        <InputText
+        <InputTextarea
           value={values.notes}
           onChange={(e) => set("notes", e.target.value)}
           placeholder="Optional notes"
+          rows={3}
+          autoResize
           className="w-full"
         />
       )}
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 pt-1">
         <Checkbox
           inputId="isFullFillUp"
           checked={values.isFullFillUp}
