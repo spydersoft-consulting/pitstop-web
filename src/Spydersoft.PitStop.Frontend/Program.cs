@@ -30,15 +30,6 @@ builder.Services.AddAuthorizationBuilder()
         policy.RequireAuthenticatedUser();
     });
 
-var allowSpecificOrigins = "_allowSpecificOrigins";
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: allowSpecificOrigins, policy =>
-    {
-        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-    });
-});
-
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -58,8 +49,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
 });
 app.MapControllers();
-app.UseSpydersoftHealthChecks(healthCheckOptions)
-    .UseCors(allowSpecificOrigins);
+app.UseSpydersoftHealthChecks(healthCheckOptions);
 
 app.MapFallbackToFile("/index.html");
 
