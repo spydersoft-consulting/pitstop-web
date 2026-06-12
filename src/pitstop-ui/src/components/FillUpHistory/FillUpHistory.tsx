@@ -155,10 +155,10 @@ const MobileFillUpCard: React.FC<MobileCardProps> = ({
             <span className="text-content-muted">Price/gal</span>
             <span className="font-numeric">${ppg.toFixed(3)}</span>
           </div>
-          {row.stationName && (
+          {row.location?.name && (
             <div className="flex justify-between gap-2">
-              <span className="text-content-muted">Station</span>
-              <span className="truncate text-right">{row.stationName}</span>
+              <span className="text-content-muted">Location</span>
+              <span className="truncate text-right">{row.location.name}</span>
             </div>
           )}
           {row.fuelGrade && (
@@ -409,7 +409,11 @@ export const FillUpHistory: React.FC = () => {
                 body={mpgTemplate}
                 sortable
               />
-              <Column field="stationName" header="Station" />
+              <Column
+                field="location.name"
+                header="Location"
+                body={(row: FillUp) => row.location?.name ?? ""}
+              />
               <Column body={actionsTemplate} style={{ width: "6rem" }} />
             </DataTable>
           </Card>

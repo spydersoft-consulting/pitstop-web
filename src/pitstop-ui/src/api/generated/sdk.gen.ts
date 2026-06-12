@@ -7,6 +7,10 @@ import type {
   DeleteApiV1VehiclesByIdResponses,
   DeleteApiV1VehiclesByVehicleIdFillupsByIdData,
   DeleteApiV1VehiclesByVehicleIdFillupsByIdResponses,
+  GetApiV1LocationsByIdData,
+  GetApiV1LocationsByIdResponses,
+  GetApiV1LocationsData,
+  GetApiV1LocationsResponses,
   GetApiV1VehiclesByIdData,
   GetApiV1VehiclesByIdResponses,
   GetApiV1VehiclesByVehicleIdAnalyticsMpgData,
@@ -21,6 +25,8 @@ import type {
   GetApiV1VehiclesByVehicleIdFillupsResponses,
   GetApiV1VehiclesData,
   GetApiV1VehiclesResponses,
+  PostApiV1LocationsData,
+  PostApiV1LocationsResponses,
   PostApiV1VehiclesByVehicleIdFillupsData,
   PostApiV1VehiclesByVehicleIdFillupsResponses,
   PostApiV1VehiclesData,
@@ -174,6 +180,49 @@ export const putApiV1VehiclesByVehicleIdFillupsById = <
       "Content-Type": "application/json",
       ...options.headers,
     },
+  });
+
+export const getApiV1Locations = <ThrowOnError extends boolean = false>(
+  options?: Options<GetApiV1LocationsData, ThrowOnError>,
+) =>
+  (options?.client ?? client).get<
+    GetApiV1LocationsResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: "json",
+    url: "/api/v1/locations",
+    ...options,
+  });
+
+export const postApiV1Locations = <ThrowOnError extends boolean = false>(
+  options: Options<PostApiV1LocationsData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<
+    PostApiV1LocationsResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: "json",
+    url: "/api/v1/locations",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+export const getApiV1LocationsById = <ThrowOnError extends boolean = false>(
+  options: Options<GetApiV1LocationsByIdData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<
+    GetApiV1LocationsByIdResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: "json",
+    url: "/api/v1/locations/{id}",
+    ...options,
   });
 
 export const getApiV1Vehicles = <ThrowOnError extends boolean = false>(

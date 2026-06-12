@@ -1,7 +1,7 @@
 import type { RootState } from "./store";
 
 const STATE_KEY = "pitstop_state";
-const STATE_VERSION = 4;
+const STATE_VERSION = 5;
 
 interface VersionedState {
   version: number;
@@ -19,6 +19,10 @@ function isValidState(state: Partial<RootState>): boolean {
   if (state.fillUps !== undefined) {
     if (!Array.isArray(state.fillUps.recentFillUps)) return false;
     if (!state.fillUps.recentFillUps.every(isObjectWithId)) return false;
+  }
+  if (state.locations !== undefined) {
+    if (!Array.isArray(state.locations.locations)) return false;
+    if (!state.locations.locations.every(isObjectWithId)) return false;
   }
   return true;
 }

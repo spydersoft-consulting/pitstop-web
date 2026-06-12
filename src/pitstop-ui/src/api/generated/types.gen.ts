@@ -12,11 +12,17 @@ export type CreateFillUpRequest = {
   pricePerGallon?: null | number | string;
   totalCost?: null | number | string;
   isFullFillUp?: boolean;
-  stationName?: null | string;
-  stationAddress?: null | string;
+  locationId?: null | number | string;
+  location?: null | CreateLocationRequest;
+  notes?: null | string;
+};
+
+export type CreateLocationRequest = {
+  name: string;
+  address?: null | string;
   latitude?: null | number | string;
   longitude?: null | number | string;
-  notes?: null | string;
+  googlePlaceId?: null | string;
 };
 
 export type CreateVehicleRequest = {
@@ -40,10 +46,7 @@ export type FillUpDto = {
   pricePerGallon?: number | string;
   totalCost?: number | string;
   isFullFillUp?: boolean;
-  stationName?: null | string;
-  stationAddress?: null | string;
-  latitude?: null | number | string;
-  longitude?: null | number | string;
+  location?: null | LocationSummaryDto;
   notes?: null | string;
   milesSinceLastFillUp?: null | number | string;
   mpgThisFillUp?: null | number | string;
@@ -66,11 +69,26 @@ export type FillUpRequest = {
   pricePerGallon?: null | number | string;
   totalCost?: null | number | string;
   isFullFillUp?: boolean;
-  stationName?: null | string;
-  stationAddress?: null | string;
+  locationId?: null | number | string;
+  location?: null | CreateLocationRequest;
+  notes?: null | string;
+};
+
+export type LocationDto = {
+  id?: number | string;
+  name?: string;
+  address?: null | string;
   latitude?: null | number | string;
   longitude?: null | number | string;
-  notes?: null | string;
+  googlePlaceId?: null | string;
+  lastUsedAt?: null | string;
+  useCount?: number | string;
+};
+
+export type LocationSummaryDto = {
+  id?: number | string;
+  name?: string;
+  address?: null | string;
 };
 
 export type MpgDataPoint = {
@@ -290,6 +308,63 @@ export type PutApiV1VehiclesByVehicleIdFillupsByIdResponses = {
 
 export type PutApiV1VehiclesByVehicleIdFillupsByIdResponse =
   PutApiV1VehiclesByVehicleIdFillupsByIdResponses[keyof PutApiV1VehiclesByVehicleIdFillupsByIdResponses];
+
+export type GetApiV1LocationsData = {
+  body?: never;
+  path?: never;
+  query?: {
+    Search?: string;
+    Limit?: number | string;
+    OrderBy?: string;
+  };
+  url: "/api/v1/locations";
+};
+
+export type GetApiV1LocationsResponses = {
+  /**
+   * OK
+   */
+  200: Array<LocationDto>;
+};
+
+export type GetApiV1LocationsResponse =
+  GetApiV1LocationsResponses[keyof GetApiV1LocationsResponses];
+
+export type PostApiV1LocationsData = {
+  body: CreateLocationRequest;
+  path?: never;
+  query?: never;
+  url: "/api/v1/locations";
+};
+
+export type PostApiV1LocationsResponses = {
+  /**
+   * OK
+   */
+  200: LocationDto;
+};
+
+export type PostApiV1LocationsResponse =
+  PostApiV1LocationsResponses[keyof PostApiV1LocationsResponses];
+
+export type GetApiV1LocationsByIdData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: "/api/v1/locations/{id}";
+};
+
+export type GetApiV1LocationsByIdResponses = {
+  /**
+   * OK
+   */
+  200: LocationDto;
+};
+
+export type GetApiV1LocationsByIdResponse =
+  GetApiV1LocationsByIdResponses[keyof GetApiV1LocationsByIdResponses];
 
 export type GetApiV1VehiclesData = {
   body?: never;
