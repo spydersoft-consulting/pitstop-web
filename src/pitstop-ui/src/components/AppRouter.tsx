@@ -13,6 +13,8 @@ import { Landing } from "./Landing/Landing";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchVehicles } from "../store/slices/vehicleSlice";
 import { fetchFillUps } from "../store/slices/fillUpSlice";
+import { fetchLocations } from "../store/slices/locationSlice";
+import { Locations } from "./Locations/Locations";
 import { useAuth } from "../context";
 
 export const AppRouter: React.FC = () => {
@@ -23,6 +25,7 @@ export const AppRouter: React.FC = () => {
   useEffect(() => {
     if (isAuthenticated) {
       void dispatch(fetchVehicles());
+      void dispatch(fetchLocations());
     }
   }, [dispatch, isAuthenticated]);
 
@@ -48,6 +51,7 @@ export const AppRouter: React.FC = () => {
           <Route path="/vehicles" element={<Vehicles />} />
           <Route path="/vehicles/new" element={<AddVehicle />} />
           <Route path="/vehicles/:id/edit" element={<EditVehicle />} />
+          <Route path="/locations" element={<Locations />} />
         </Route>
       </Routes>
     </Router>

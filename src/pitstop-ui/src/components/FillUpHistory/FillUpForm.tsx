@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { InputText } from "primereact/inputtext";
 import { InputNumber } from "primereact/inputnumber";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Calendar } from "primereact/calendar";
@@ -8,6 +7,7 @@ import { Checkbox } from "primereact/checkbox";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import type { CreateFillUpRequest, FillUpRequest } from "../../api/generated/types.gen";
+import { LocationPicker, type LocationSelection } from "../Locations/LocationPicker";
 
 const FUEL_GRADE_OPTIONS = [
   { label: "Regular", value: "Regular" },
@@ -25,7 +25,7 @@ export interface FillUpFormValues {
   pricePerGallon: number | null;
   totalCost: number | null;
   isFullFillUp: boolean;
-  stationName: string;
+  location: LocationSelection;
   notes: string;
 }
 
@@ -44,7 +44,7 @@ const defaults: FillUpFormValues = {
   pricePerGallon: null,
   totalCost: null,
   isFullFillUp: true,
-  stationName: "",
+  location: null,
   notes: "",
 };
 
@@ -76,8 +76,27 @@ export const FillUpForm: React.FC<Props> = ({
     if (values.gallonsAdded == null) next.gallonsAdded = "Gallons added is required.";
     if (values.pricePerGallon == null) next.pricePerGallon = "Price per gallon is required.";
     if (values.totalCost == null) next.totalCost = "Total cost is required.";
+    if (values.location?.kind === "new" && !values.location.name.trim()) {
+      next.location = "Location name is required.";
+    }
     setErrors(next);
     return Object.keys(next).length === 0;
+  };
+
+  const locationFields = (selection: LocationSelection):
+    | Pick<CreateFillUpRequest, "locationId" | "location"> => {
+    if (selection === null) return { locationId: null, location: null };
+    if (selection.kind === "existing") return { locationId: selection.id, location: null };
+    return {
+      locationId: null,
+      location: {
+        name: selection.name.trim(),
+        address: selection.address?.trim() || null,
+        latitude: selection.latitude,
+        longitude: selection.longitude,
+        googlePlaceId: selection.googlePlaceId,
+      },
+    };
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -92,7 +111,7 @@ export const FillUpForm: React.FC<Props> = ({
       pricePerGallon: values.pricePerGallon!,
       totalCost: values.totalCost!,
       isFullFillUp: values.isFullFillUp,
-      stationName: values.stationName.trim() || null,
+      ...locationFields(values.location),
       notes: values.notes.trim() || null,
     };
     onSubmit(body);
@@ -184,13 +203,10 @@ export const FillUpForm: React.FC<Props> = ({
         )}
       </div>
 
-      {field("Station Name",
-        undefined,
-        <InputText
-          value={values.stationName}
-          onChange={(e) => set("stationName", e.target.value)}
-          placeholder="e.g. Shell on Main St"
-          className="w-full"
+      {field("Location", errors.location,
+        <LocationPicker
+          value={values.location}
+          onChange={(loc) => set("location", loc)}
         />
       )}
 

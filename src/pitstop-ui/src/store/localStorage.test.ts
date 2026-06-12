@@ -3,11 +3,12 @@ import { loadState, saveState } from "./localStorage";
 import type { RootState } from "./store";
 
 const KEY = "pitstop_state";
-const VERSION = 4;
+const VERSION = 5;
 
 const sampleState = (): RootState => ({
   vehicles: { vehicles: [], selectedVehicleId: null, loading: false },
   fillUps: { recentFillUps: [], loading: false },
+  locations: { locations: [], loading: false },
 });
 
 describe("localStorage state persistence", () => {

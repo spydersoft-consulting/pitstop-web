@@ -2,10 +2,12 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { loadState, saveState } from "./localStorage";
 import { vehicleSliceReducer } from "./slices/vehicleSlice";
 import { fillUpSliceReducer } from "./slices/fillUpSlice";
+import { locationSliceReducer } from "./slices/locationSlice";
 
 const rootReducer = combineReducers({
   vehicles: vehicleSliceReducer,
   fillUps: fillUpSliceReducer,
+  locations: locationSliceReducer,
 });
 
 // Defined from rootReducer (not store.getState) to avoid circular type reference with localStorage

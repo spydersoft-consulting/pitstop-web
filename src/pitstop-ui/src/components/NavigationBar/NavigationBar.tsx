@@ -7,6 +7,7 @@ import {
   faChartLine,
   faCar,
   faHome,
+  faLocationDot,
   faSignInAlt,
   faSignOutAlt,
   faUser,
@@ -30,6 +31,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Dashboard", icon: faHome, to: "/" },
   { label: "Vehicles", icon: faCar, to: "/vehicles" },
   { label: "Fill-Ups", icon: faGasPump, to: "/fill-ups" },
+  { label: "Locations", icon: faLocationDot, to: "/locations" },
   { label: "Analytics", icon: faChartLine, to: "/analytics" },
 ];
 

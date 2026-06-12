@@ -57,7 +57,7 @@ extends:
 
     bffExecuteTests: false
     bffUseSonarCloud: true
-    bffSonarCloudOrganization: spydersoft-mjg
+    bffSonarCloudOrganization: spydersoft-consulting
     bffSonarEndpointName: sonarcloud-spydersoft
     bffSonarProjectName: pitstop-web-bff
     bffSonarProjectKey: spydersoft-consulting_pitstop-web-bff
@@ -69,7 +69,7 @@ extends:
       sonar.coverage.exclusions=**/*Program.cs,**/*Controller.cs
 
     uiSonarEndpointName: sonarcloud-spydersoft
-    uiSonarCloudOrganization: spydersoft-mjg
+    uiSonarCloudOrganization: spydersoft-consulting
     uiUseSonarCloud: true
     uiSonarConfigFile: react-sonar-project.properties
     uiCodeCoverageFile: src/pitstop-ui/output/coverage/cobertura-coverage.xml

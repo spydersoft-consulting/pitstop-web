@@ -35,7 +35,14 @@ export const EditFillUp: React.FC = () => {
     pricePerGallon: Number(fillUp.pricePerGallon) || null,
     totalCost: Number(fillUp.totalCost) || null,
     isFullFillUp: fillUp.isFullFillUp ?? true,
-    stationName: fillUp.stationName ?? "",
+    location: fillUp.location
+      ? {
+          kind: "existing",
+          id: Number(fillUp.location.id),
+          name: fillUp.location.name ?? "",
+          address: fillUp.location.address ?? null,
+        }
+      : null,
     notes: fillUp.notes ?? "",
   };
 
